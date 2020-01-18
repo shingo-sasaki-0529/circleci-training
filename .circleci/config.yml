@@ -6,10 +6,10 @@ jobs:
         - image: circleci/ruby:2.4.2-jessie-node
     steps:
       - checkout
-      - run: echo "はろーわーるど"
+      - run:
+        name: "はろーわーるどすてっぷ"
+        command: echo "はろーわーるど"
 workflows:
   welcome:
     jobs:
-      - helloWorld
-      - helloWorld
       - helloWorld
