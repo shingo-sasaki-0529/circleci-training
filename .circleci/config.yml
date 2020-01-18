@@ -1,20 +1,51 @@
 version: 2.0
 jobs:
- build:
-   docker:
-     - image: circleci/node:10-browsers
-   steps:
-    - checkout
-    - run:
-        name: 最初の一歩
-        command: |
-          echo 'Hello World!'
-          echo 'This is the delivery pipeline'
-    - run:
-        name: コードの取得
-        command: |
-          ls -al
-          echo '^^^That should look familiar^^^'
-    - run:
-        name: 独自コンテナで実行
-        command: node -v
+  HelloWorld:
+    docker:
+      - image: alpine:3.7
+    steps:
+      - run:
+          name: HelloWorld
+          command: echo "ハローワールド"
+  CheckCode:
+    docker:
+      - image: alpine:3.7
+    steps:
+      - run:
+          name: コードの取得
+          command: |
+            ls -al
+            echo "↑現在のコード"
+  RunWithNode:
+    docker:
+      - image: circleci/node:10-browsers
+    steps:
+      - run:
+          name: Nodeコンテナで実行
+          command: node -v
+  NowComplete:
+    docker:
+      - image: alpine:3.7
+    steps:
+      - run:
+          name: 最後のジョブ
+          command: echo "全部完了したよ"
+workflows:
+  version: 2
+  ExampleWorkflow:
+    jobs:
+      - HelloWorld
+      - CheckCode:
+          requires:
+            - HelloWorld
+      - RunWithNode:
+          requires:
+            - HelloWorld
+      - HoldForApproval:
+          type: approval
+          requires:
+            - CheckCode
+            - RunWithNode
+      - NowComplete:
+          requires:
+            - HoldForApproval
