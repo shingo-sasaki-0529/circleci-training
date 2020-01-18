@@ -1,9 +1,8 @@
 version: 2.1
 jobs:
   helloWorld:
-    build:
-      docker:
-        - image: circleci/ruby:2.4.2-jessie-node
+    docker:
+      - image: circleci/ruby:2.4.2-jessie-node
     steps:
       - checkout
       - run:
