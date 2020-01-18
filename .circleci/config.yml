@@ -1,8 +1,51 @@
 version: 2.1
-orbs:
-  OrbsHello: circleci/hello-build@0.0.5
+executors:
+  node-image:
+    docker:
+      - image: circleci/node:10-browsers
+jobs:
+  HelloWorld:
+    executor: node-image
+    steps:
+      - run:
+          name: HelloWorld
+          command: echo "ハローワールド"
+  CheckCode:
+    executor: node-image
+    steps:
+      - run:
+          name: コードの取得
+          command: |
+            ls -al
+            echo "↑現在のコード"
+  RunWithNode:
+    executor: node-image
+    steps:
+      - run:
+          name: Nodeコンテナで実行
+          command: node -v
+  NowComplete:
+    executor: node-image
+    steps:
+      - run:
+          name: 最後のジョブ
+          command: echo "全部完了したよ"
 workflows:
-  HellowOrbs:
+  version: 2
+  ExampleWorkflow:
     jobs:
-      - OrbsHello/hello-build:
-          to: "Sasaki"
+      - HelloWorld
+      - CheckCode:
+          requires:
+            - HelloWorld
+      - RunWithNode:
+          requires:
+            - HelloWorld
+      - HoldForApproval:
+          type: approval
+          requires:
+            - CheckCode
+            - RunWithNode
+      - NowComplete:
+          requires:
+            - HoldForApproval
