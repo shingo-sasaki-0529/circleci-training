@@ -4,4 +4,5 @@ orbs:
 workflows:
   HellowOrbs:
     jobs:
-      - OrbsHello/hello-build
+      - OrbsHello/hello-build:
+          to: "Sasaki"
