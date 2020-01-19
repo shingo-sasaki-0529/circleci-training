@@ -23,6 +23,7 @@ jobs:
 
 workflows:
   myWorkflow:
+    when: << pipeline.parameters.run_my_workflow >>
     jobs:
       - myJob:
           to: "params from workflow"
