@@ -11,10 +11,15 @@ commands:
       - run: echo << parameters.to >>
 
 jobs:
-  build:
+  myJob:
     docker:
       - image: "circleci/node:9.6.1"
     steps:
-      - sayhello
       - sayhello:
-          to: "Override params"
+          to: << parameters.to >>
+
+workflows:
+  myWorkflow:
+    jobs:
+      - myJob:
+          to: "params from workflow"
