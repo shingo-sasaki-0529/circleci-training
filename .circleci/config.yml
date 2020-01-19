@@ -1,51 +1,20 @@
 version: 2.1
-executors:
-  node-image:
-    docker:
-      - image: circleci/node:10-browsers
+
+commands:
+  sayhello:
+    description: "デモ用のコマンド"
+    parameters:
+      to:
+        type: string
+        defualt: "Hello World"
+    steps:
+      - run: echo << parameters.to >>
+
 jobs:
-  HelloWorld:
-    executor: node-image
+  myjob:
+    docker:
+      - image: "circleci/node:9.6.1"
     steps:
-      - run:
-          name: HelloWorld
-          command: echo "ハローワールド"
-  CheckCode:
-    executor: node-image
-    steps:
-      - run:
-          name: コードの取得
-          command: |
-            ls -al
-            echo "↑現在のコード"
-  RunWithNode:
-    executor: node-image
-    steps:
-      - run:
-          name: Nodeコンテナで実行
-          command: node -v
-  NowComplete:
-    executor: node-image
-    steps:
-      - run:
-          name: 最後のジョブ
-          command: echo "全部完了したよ"
-workflows:
-  version: 2
-  ExampleWorkflow:
-    jobs:
-      - HelloWorld
-      - CheckCode:
-          requires:
-            - HelloWorld
-      - RunWithNode:
-          requires:
-            - HelloWorld
-      - HoldForApproval:
-          type: approval
-          requires:
-            - CheckCode
-            - RunWithNode
-      - NowComplete:
-          requires:
-            - HoldForApproval
+      - sayhello
+      - sayhello:
+          to: "Override params"
