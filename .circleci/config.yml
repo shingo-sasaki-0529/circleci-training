@@ -27,8 +27,12 @@ jobs:
           to: << parameters.to >>
 
 workflows:
-  myWorkflow:
+  normalWorkflow:
+    jobs:
+      - myJob:
+          to: "from normal workflow..."
+  specialWorkflow:
     when: << pipeline.parameters.run_my_workflow >>
     jobs:
       - myJob:
-          to: "params from workflow"
+          to: "from special workflow!!"
