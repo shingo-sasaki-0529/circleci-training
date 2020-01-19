@@ -6,7 +6,7 @@ commands:
     parameters:
       to:
         type: string
-        defualt: "Hello World"
+        default: "Hello World"
     steps:
       - run: echo << parameters.to >>
 
