@@ -7,7 +7,7 @@ parameters:
 
 commands:
   sayhello:
-    description: "デモ用のコマンド"
+    description: "デモ用のコマンドだよ"
     parameters:
       to:
         type: string
