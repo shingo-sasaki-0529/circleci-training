@@ -1,9 +1,12 @@
 version: 2.1
 
 parameters:
-  run_my_workflow:
+  runSpecialWorkflow:
     type: boolean
     default: false
+  specialWorkflowText:
+    type: string
+    default: "Hello, special workflow"
 
 commands:
   sayhello:
@@ -32,7 +35,7 @@ workflows:
       - myJob:
           to: "from normal workflow..."
   specialWorkflow:
-    when: << pipeline.parameters.run_my_workflow >>
+    when: << pipeline.parameters.runSpecialWorkflow >>
     jobs:
       - myJob:
-          to: "from special workflow!!"
+          to: << pipeline.parameters.specialWorkflowText >>
