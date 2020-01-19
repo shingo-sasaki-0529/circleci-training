@@ -2,7 +2,7 @@ version: 2.1
 
 parameters:
   run_my_workflow:
-    type: bool
+    type: boolean
     default: false
 
 commands:
