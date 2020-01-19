@@ -1,5 +1,10 @@
 version: 2.1
 
+parameters:
+  run_my_workflow:
+    type: bool
+    default: false
+
 commands:
   sayhello:
     description: "デモ用のコマンド"
@@ -23,10 +28,6 @@ jobs:
 
 workflows:
   myWorkflow:
-    parameters:
-      run_my_workflow:
-        type: bool
-        default: false
     when: << pipeline.parameters.run_my_workflow >>
     jobs:
       - myJob:
