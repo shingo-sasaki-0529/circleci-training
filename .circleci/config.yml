@@ -12,6 +12,9 @@ commands:
 
 jobs:
   myJob:
+    parameters:
+      to:
+        type: string
     docker:
       - image: "circleci/node:9.6.1"
     steps:
